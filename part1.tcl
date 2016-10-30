@@ -19,13 +19,23 @@ proc finish {} {
 #Create two nodes
 set n0 [$ns node]
 set n1 [$ns node]
+set n2 [$ns node]
+set n3 [$ns node]
+set n4 [$ns node]
+set n5 [$ns node]
+set n6 [$ns node]
 
 #Create a duplex link between the nodes
-$ns duplex-link $n0 $n1 1Mb 10ms DropTail
+$ns duplex-link $n1 $n2 10Mb 10ms DropTail
+$ns duplex-link $n5 $n2 10Mb 10ms DropTail
+$ns duplex-link $n2 $n3 10Mb 10ms DropTail
+$ns duplex-link $n3 $n4 10Mb 10ms DropTail
+$ns duplex-link $n3 $n6 10Mb 10ms DropTail
+
 
 #Create a UDP agent and attach it to node n0
 set udp0 [new Agent/UDP]
-$ns attach-agent $n0 $udp0
+$ns attach-agent $n2 $udp0
 
 # Create a CBR traffic source and attach it to udp0
 set cbr0 [new Application/Traffic/CBR]
@@ -35,10 +45,10 @@ $cbr0 attach-agent $udp0
 
 #Create a Null agent (a traffic sink) and attach it to node n1
 set null0 [new Agent/Null]
-$ns attach-agent $n1 $null0
+$ns attach-agent $n3 $null0
 
 #Connect the traffic source with the traffic sink
-$ns connect $udp0 $null0  
+$ns connect $udp0 $null0 
 
 #Schedule events for the CBR agent
 $ns at 0.5 "$cbr0 start"
