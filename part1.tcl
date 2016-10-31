@@ -37,7 +37,7 @@ set udp0 [new Agent/UDP]
 $ns attach-agent $n2 $udp0
 
 #Create a TCP agent and attach it to node n1
-set tcp1 [new Agent/TCP]
+set tcp1 [new Agent/TCP/Reno]
 $tcp1 set fid_ 2
 set sink1 [new Agent/TCPSink]
 $ns attach-agent $n1 $tcp1
@@ -48,8 +48,8 @@ $ftp1 attach-agent $tcp1
 $ns at 0.5 "$ftp1 start"
 
 #Create a TCP agent and attach it to node n5
-set tcp2 [new Agent/TCP]
-$tcp2 set fid_ 2
+set tcp2 [new Agent/TCP/Reno]
+$tcp2 set fid_ 3
 set sink2 [new Agent/TCPSink]
 $ns attach-agent $n5 $tcp2
 $ns attach-agent $n6 $sink2
