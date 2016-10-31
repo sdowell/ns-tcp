@@ -37,13 +37,35 @@ $ns duplex-link $n3 $n6 10Mb 10ms DropTail
 set udp0 [new Agent/UDP]
 $ns attach-agent $n2 $udp0
 
+#Create a TCP agent and attach it to node n1
+set tcp1 [new Agent/TCP]
+$tcp1 set fid_ 2
+set sink1 [new Agent/TCPSink]
+$ns attach-agent $n1 $tcp1
+$ns attach-agent $n4 $sink1
+$ns connect $tcp1 $sink1
+set ftp1 [new Application/FTP]
+$ftp1 attach-agent $tcp1
+$ns at 0.5 "$ftp1 start"
+
+#Create a TCP agent and attach it to node n5
+set tcp2 [new Agent/TCP]
+$tcp2 set fid_ 2
+set sink2 [new Agent/TCPSink]
+$ns attach-agent $n5 $tcp2
+$ns attach-agent $n6 $sink2
+$ns connect $tcp2 $sink2
+set ftp2 [new Application/FTP]
+$ftp2 attach-agent $tcp2
+$ns at 0.5 "$ftp2 start"
+
 # Create a CBR traffic source and attach it to udp0
 set cbr0 [new Application/Traffic/CBR]
 $cbr0 set packetSize_ 500
 $cbr0 set interval_ 0.005
 $cbr0 attach-agent $udp0
 
-#Create a Null agent (a traffic sink) and attach it to node n1
+#Create a Null agent (a traffic sink) and attach it to node n3
 set null0 [new Agent/Null]
 $ns attach-agent $n3 $null0
 
