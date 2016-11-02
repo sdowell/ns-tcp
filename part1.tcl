@@ -25,11 +25,11 @@ set n5 [$ns node]
 set n6 [$ns node]
 
 #Create a duplex link between the nodes
-$ns duplex-link $n1 $n2 10Mb 10ms DropTail 
-$ns duplex-link $n5 $n2 10Mb 10ms DropTail
-$ns duplex-link $n2 $n3 10Mb 10ms DropTail
-$ns duplex-link $n3 $n4 10Mb 10ms DropTail
-$ns duplex-link $n3 $n6 10Mb 10ms DropTail
+$ns duplex-link $n1 $n2 10Mb 1ms DropTail 
+$ns duplex-link $n5 $n2 10Mb 1ms DropTail
+$ns duplex-link $n2 $n3 10Mb 1ms DropTail
+$ns duplex-link $n3 $n4 10Mb 1ms DropTail
+$ns duplex-link $n3 $n6 10Mb 1ms DropTail
 
 #Re-Orient nodes
 $ns duplex-link-op $n1 $n2 orient right-down      
