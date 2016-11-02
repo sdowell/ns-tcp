@@ -17,9 +17,9 @@ def parsePacketLoss(filename):
       size = int(words[10])
       flow = int(words[12])
       if source == 0 and event == "-":
-        tuples[flow][0]++
+        tuples[flow][0] += 1
       if event == "d":
-        dropped[flow][1]++
+        dropped[flow][1] += 1
       continue
       
       flow = -1
@@ -27,7 +27,7 @@ def parsePacketLoss(filename):
         index++
         flow = int(words[index])
         if words[0] == "d":
-          dropped[flow]++
+          dropped[flow] += 1
         elif words[0] == "-"
       index++
       
