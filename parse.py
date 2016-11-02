@@ -16,7 +16,7 @@ def parsePacketLoss(filename):
       protocol = words[8]
       size = int(words[10])
       flow = int(words[12])
-      if source == 0 && event == "-":
+      if source == 0 and event == "-":
         tuples[flow][0]++
       if event == "d":
         dropped[flow][1]++
