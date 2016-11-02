@@ -10,6 +10,7 @@ def parsePacketLoss(filename):
 
 def main():
   #code
+  parsePacketLoss("out.nam")
   pass
 
 if __name__=="__main__":
