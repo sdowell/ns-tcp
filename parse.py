@@ -4,8 +4,9 @@ def parseBandwidth():
 
 def parsePacketLoss(filename):
   with open(filename) as f:
-    print f.readlines()
-    print "Iteration\n"
+    lines = f.readlines()
+  for line in lines:
+     print line
   return
 
 
