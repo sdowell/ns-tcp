@@ -8,22 +8,22 @@ def parsePacketLoss(filename):
     lines = f.readlines()
   for line in lines:
     words = line.split()
+    if words[2] == "*":
+      continue
+    event = words[0]
+    print words[4]
+    source = int(words[4])
+    dest = int(words[6])
+    protocol = words[8]
+    size = int(words[10])
+    flow = int(words[12])
+    if source == 0 and event == "-":
+      tuples[flow][0] += 1
+    if event == "d":
+      dropped[flow][1] += 1
+    continue
     index = 0
     while index < len(words):
-      event = words[0]
-      print words[4]
-      source = int(words[4])
-      dest = int(words[6])
-      protocol = words[8]
-      size = int(words[10])
-      flow = int(words[12])
-      if source == 0 and event == "-":
-        tuples[flow][0] += 1
-      if event == "d":
-        dropped[flow][1] += 1
-      index += 1
-      continue
-      
       flow = -1
       if words[index] == "-c":
         index += 1
