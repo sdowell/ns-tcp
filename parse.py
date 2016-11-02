@@ -20,16 +20,17 @@ def parsePacketLoss(filename):
         tuples[flow][0] += 1
       if event == "d":
         dropped[flow][1] += 1
+      index += 1
       continue
       
       flow = -1
       if words[index] == "-c":
-        index++
+        index += 1
         flow = int(words[index])
         if words[0] == "d":
           dropped[flow] += 1
         elif words[0] == "-"
-      index++
+      index += 1
       
       
   return tuples
