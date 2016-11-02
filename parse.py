@@ -11,7 +11,6 @@ def parsePacketLoss(filename):
     if words[2] == "*":
       continue
     event = words[0]
-    print words[4]
     source = int(words[4])
     dest = int(words[6])
     protocol = words[8]
@@ -39,7 +38,7 @@ def parsePacketLoss(filename):
 
 def main():
   #code
-  parsePacketLoss("out.nam")
+  print parsePacketLoss("out.nam")
   pass
 
 if __name__=="__main__":
