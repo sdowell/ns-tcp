@@ -19,7 +19,7 @@ def parseBandwidth(filename):
       bws[flow] += size
     if source == 1 and flow == 0 and event == "-":
       bws[flow] += size
-  return tuples
+  return bws
 
 def parsePacketLoss(filename):
   tuples = [[0,0],[0,0],[0,0]]
