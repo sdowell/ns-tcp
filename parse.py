@@ -13,11 +13,11 @@ def parseBandwidth(filename):
     protocol = words[8]
     size = int(words[10])
     flow = int(words[12])
-    if source == 0 and flow == 1 and event == "-":
+    if source == 1 and dest == 2 and flow == 1 and event == "-":
       bws[flow] += size
-    if source == 4 and flow == 2 and event == "-":
+    if source == 1 and dest == 2 and flow == 2 and event == "-":
       bws[flow] += size
-    if source == 1 and flow == 0 and event == "-":
+    if source == 1 and dest == 2 and flow == 0 and event == "-":
       bws[flow] += size
   return bws
 
