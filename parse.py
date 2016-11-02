@@ -62,6 +62,7 @@ def parsePacketLoss(filename):
 def main():
   #code
   print parsePacketLoss("out.nam")
+  print parseBandwidth("out.nam")
   pass
 
 if __name__=="__main__":
