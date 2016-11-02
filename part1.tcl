@@ -32,11 +32,11 @@ $ns duplex-link $n3 $n4 10Mb 10ms DropTail
 $ns duplex-link $n3 $n6 10Mb 10ms DropTail
 
 #Re-Orient nodes
-#$ns duplex-link-op $n1 $n2 orient right-down      
-#$ns duplex-link-op $n5 $n2 orient right-up 
-#$ns duplex-link-op $n2 $n3 orient right 
-#$ns duplex-link-op $n3 $n4 orient right-up 
-#$ns duplex-link-op $n3 $n6 orient right-down
+$ns duplex-link-op $n1 $n2 orient right-down      
+$ns duplex-link-op $n5 $n2 orient right-up 
+$ns duplex-link-op $n2 $n3 orient right 
+$ns duplex-link-op $n3 $n4 orient right-up 
+$ns duplex-link-op $n3 $n6 orient right-down
 
 #Create a UDP agent and attach it to node n0
 set udp0 [new Agent/UDP]
