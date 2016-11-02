@@ -52,6 +52,7 @@ $ns connect $tcp1 $sink1
 set ftp1 [new Application/FTP]
 $ftp1 attach-agent $tcp1
 $ns at 0.5 "$ftp1 start"
+$ns at 4.5 "$ftp1 stop"
 
 #Create a TCP agent and attach it to node n5
 set tcp2 [new Agent/TCP/Reno]
@@ -63,6 +64,7 @@ $ns connect $tcp2 $sink2
 set ftp2 [new Application/FTP]
 $ftp2 attach-agent $tcp2
 $ns at 0.5 "$ftp2 start"
+$ns at 4.5 "$ftp2 stop"
 
 # Create a CBR traffic source and attach it to udp0
 set cbr0 [new Application/Traffic/CBR]
