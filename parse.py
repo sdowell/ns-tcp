@@ -11,6 +11,7 @@ def parsePacketLoss(filename):
     index = 0
     while index < len(words):
       event = words[0]
+      print words[4]
       source = int(words[4])
       dest = int(words[6])
       protocol = words[8]
