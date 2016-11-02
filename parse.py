@@ -29,7 +29,7 @@ def parsePacketLoss(filename):
         flow = int(words[index])
         if words[0] == "d":
           dropped[flow] += 1
-        elif words[0] == "-"
+        elif words[0] == "-":
       index += 1
       
       
