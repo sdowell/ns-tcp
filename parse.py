@@ -56,7 +56,7 @@ def parsePacketLoss(filename):
       #  elif words[0] == "-":
       #index += 1
       
-  return [tuples[0][0]/tuples[0][1],tuples[1][0]/tuples[1][1],tuples[2][0]/tuples[2][1]]
+  return [tuples[0][1]/tuples[0][0],tuples[1][1]/tuples[1][0],tuples[2][1]/tuples[2][0]]
   return tuples
 
 
