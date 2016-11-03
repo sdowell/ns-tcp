@@ -1,5 +1,5 @@
 
-def parseBandwidth(filename,time):
+def parseBandwidth(filename,time=10):
   bws = [0.0,0.0,0.0]
   with open(filename) as f:
     lines = f.readlines()
