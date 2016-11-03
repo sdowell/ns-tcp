@@ -52,7 +52,7 @@ $ns connect $tcp1 $sink1
 set ftp1 [new Application/FTP]
 $ftp1 attach-agent $tcp1
 $ns at 0.5 "$ftp1 start"
-$ns at 10.5 "$ftp1 stop"
+$ns at 60.5 "$ftp1 stop"
 
 #Create a TCP agent and attach it to node n5
 set tcp2 [new Agent/TCP/Reno]
@@ -64,7 +64,7 @@ $ns connect $tcp2 $sink2
 set ftp2 [new Application/FTP]
 $ftp2 attach-agent $tcp2
 $ns at 0.5 "$ftp2 start"
-$ns at 10.5 "$ftp2 stop"
+$ns at 60.5 "$ftp2 stop"
 
 # Create a CBR traffic source and attach it to udp0
 set cbr0 [new Application/Traffic/CBR]
@@ -81,9 +81,9 @@ $ns connect $udp0 $null0
 
 #Schedule events for the CBR agent
 $ns at 0.5 "$cbr0 start"
-$ns at 10.5 "$cbr0 stop"
+$ns at 60.5 "$cbr0 stop"
 #Call the finish procedure after 5 seconds of simulation time
-$ns at 11.0 "finish"
+$ns at 61.0 "finish"
 
 #Run the simulation
 $ns run
