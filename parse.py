@@ -1,6 +1,6 @@
 
-def parseBandwidth(filename):
-  bws = [0,0,0]
+def parseBandwidth(filename,time):
+  bws = [0.0,0.0,0.0]
   with open(filename) as f:
     lines = f.readlines()
   for line in lines:
@@ -19,10 +19,11 @@ def parseBandwidth(filename):
       bws[flow] += size
     if source == 1 and dest == 2 and flow == 0 and event == "-":
       bws[flow] += size
+  return [bws[0]/time,bws[1]/time,bws[2]/time]
   return bws
 
 def parsePacketLoss(filename):
-  tuples = [[0,0],[0,0],[0,0]]
+  tuples = [[0.0,0.0],[0.0,0.0],[0.0,0.0]]
   with open(filename) as f:
     lines = f.readlines()
   for line in lines:
@@ -55,7 +56,7 @@ def parsePacketLoss(filename):
       #  elif words[0] == "-":
       #index += 1
       
-      
+  return [tuples[0][0]/tuples[0][1],tuples[1][0]/tuples[1][1],tuples[2][0]/tuples[2][1]]
   return tuples
 
 
