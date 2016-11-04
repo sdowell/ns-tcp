@@ -1,10 +1,7 @@
 import matplotlib.pyplot as plt
 
-def parseBandwidth(filename,time=10, numflows=3):
+def parseBandwidth(filename,time=10):
   bws = [0.0,0.0,0.0]
-  bws = []
-  for i in range(0, numflows):
-    bws.append(0.0)
   with open(filename) as f:
     lines = f.readlines()
   for line in lines:
@@ -17,24 +14,17 @@ def parseBandwidth(filename,time=10, numflows=3):
     protocol = words[8]
     size = int(words[10])
     flow = int(words[12])
-    if source == 1 and dest == 2 and event == "-":
+    if source == 1 and dest == 2 and flow == 1 and event == "-":
       bws[flow] += size
-#    if source == 1 and dest == 2 and flow == 1 and event == "-":
-#      bws[flow] += size
-#    if source == 1 and dest == 2 and flow == 2 and event == "-":
-#      bws[flow] += size
-#    if source == 1 and dest == 2 and flow == 0 and event == "-":
-#      bws[flow] += size
-  for i in range(0, numflows):
-    bws[i] /= time
-    bws[i] *= 8
-    bws[i] /= 1000000
-  return bws
+    if source == 1 and dest == 2 and flow == 2 and event == "-":
+      bws[flow] += size
+    if source == 1 and dest == 2 and flow == 0 and event == "-":
+      bws[flow] += size
   return [bws[0]/time,bws[1]/time,bws[2]/time]
   return [(bws[0] * 8.0)/(time * 1000000),(bws[1] * 8.0)/(time * 1000000),(bws[2] * 8.0)/(time * 1000000)]
   #return bws
 
-def parsePacketLoss(filename, numflows=3):
+def parsePacketLoss(filename):
   tuples = [[0.0,0.0],[0.0,0.0],[0.0,0.0]]
   with open(filename) as f:
     lines = f.readlines()
@@ -56,6 +46,17 @@ def parsePacketLoss(filename, numflows=3):
       tuples[flow][0] += 1
     if event == "d":
       tuples[flow][1] += 1
+    continue
+    index = 0
+    while index < len(words):
+      flow = -1
+      if words[index] == "-c":
+        index += 1
+        flow = int(words[index])
+        if words[0] == "d":
+          dropped[flow] += 1
+      #  elif words[0] == "-":
+      #index += 1
       
   return [100.0 * tuples[0][1]/tuples[0][0],100.0 * tuples[1][1]/tuples[1][0],100.0 * tuples[2][1]/tuples[2][0]]
   return tuples
@@ -77,7 +78,7 @@ def main():
       loss[i].append(l[i])
     b = parseBandwidth(file)
     for i in range(0, len(b)):
-      bw[i].append(b[i])
+      bw[i].append(((b[i] * 8.0) / 1000000))
   plt.subplot(2,1,1)
   plt.title('NewReno/Reno')
   plt.ylabel('Loss Percentage (%)')
@@ -89,8 +90,8 @@ def main():
   for i in range(0,numflows):
     plt.plot(cbr,bw[i])
   plt.legend(['CBR', 'NewReno', 'Reno'], loc='upper left')
-  plt.show()
-  #plt.savefig('NRxR.png')
+  #plt.show()
+  plt.savefig('NRxR.png')
   return
 
 if __name__=="__main__":

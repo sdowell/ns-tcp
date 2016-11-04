@@ -79,18 +79,18 @@ def main():
     for i in range(0, len(b)):
       bw[i].append(b[i])
   plt.subplot(2,1,1)
-  plt.title('NewReno/Reno')
+  plt.title('NewReno/Vegas')
   plt.ylabel('Loss Percentage (%)')
   for i in range(0,numflows):
     plt.plot(cbr,loss[i])
-  plt.legend(['CBR', 'NewReno', 'Reno'], loc='upper left')
+  plt.legend(['CBR', 'NewReno', 'Vegas'], loc='upper left')
   plt.subplot(2,1,2)
   plt.ylabel('Bandwidth (Mb)')
   for i in range(0,numflows):
     plt.plot(cbr,bw[i])
-  plt.legend(['CBR', 'NewReno', 'Reno'], loc='upper left')
-  plt.show()
-  #plt.savefig('NRxR.png')
+  plt.legend(['CBR', 'NewReno', 'Vegas'], loc='upper left')
+  #plt.show()
+  plt.savefig('NRxV.png')
   return
 
 if __name__=="__main__":
