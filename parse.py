@@ -81,14 +81,14 @@ def main():
   plt.subplot(2,1,1)
   plt.title('Reno/Reno')
   plt.ylabel('Loss Percentage')
-  plt.legend(['CBR', 'Reno', 'Reno'], loc='upper left')
   for i in range(0,numflows):
     plt.plot(cbr,loss[i])
+  plt.legend(['CBR', 'Reno', 'Reno'], loc='upper left')
   plt.subplot(2,1,2)
   plt.ylabel('Bandwidth')
-  plt.legend(['CBR', 'Reno', 'Reno'], loc='upper left')
   for i in range(0,numflows):
     plt.plot(cbr,bw[i])
+  plt.legend(['CBR', 'Reno', 'Reno'], loc='upper left')
   plt.show()
   #plt.savefig('RxR.png')
   return
