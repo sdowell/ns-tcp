@@ -12,7 +12,7 @@ proc finish {} {
 	#Close the trace file
         close $nf
 	#Execute nam on the trace file
-        exec nam out.nam &
+        #exec nam out.nam &
         exit 0
 }
 
@@ -43,7 +43,7 @@ set udp0 [new Agent/UDP]
 $ns attach-agent $n2 $udp0
 
 #Create a TCP agent and attach it to node n1
-set tcp1 [new Agent/TCP/Reno]
+set tcp1 [new Agent/TCP/Vegas]
 $tcp1 set fid_ 1
 set sink1 [new Agent/TCPSink]
 $ns attach-agent $n1 $tcp1
@@ -54,22 +54,10 @@ $ftp1 attach-agent $tcp1
 $ns at 0.5 "$ftp1 start"
 $ns at 10.5 "$ftp1 stop"
 
-#Create a TCP agent and attach it to node n5
-set tcp2 [new Agent/TCP/Reno]
-$tcp2 set fid_ 2
-set sink2 [new Agent/TCPSink]
-$ns attach-agent $n5 $tcp2
-$ns attach-agent $n6 $sink2
-$ns connect $tcp2 $sink2
-set ftp2 [new Application/FTP]
-$ftp2 attach-agent $tcp2
-$ns at 0.5 "$ftp2 start"
-$ns at 10.5 "$ftp2 stop"
-
 # Create a CBR traffic source and attach it to udp0
 set cbr0 [new Application/Traffic/CBR]
-$cbr0 set packetSize_ 5000
-$cbr0 set interval_ 0.005
+$cbr0 set packetSize_ 1250
+$cbr0 set interval_ 0.001
 $cbr0 attach-agent $udp0
 
 #Create a Null agent (a traffic sink) and attach it to node n3
