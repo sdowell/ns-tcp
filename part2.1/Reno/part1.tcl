@@ -27,7 +27,7 @@ set n6 [$ns node]
 #Create a duplex link between the nodes
 $ns duplex-link $n1 $n2 10Mb 1ms DropTail 
 $ns duplex-link $n5 $n2 10Mb 1ms DropTail
-$ns duplex-link $n2 $n3 10Mb 1ms DropTail
+$ns duplex-link $n2 $n3 1.5Mb 1ms DropTail
 $ns duplex-link $n3 $n4 10Mb 1ms DropTail
 $ns duplex-link $n3 $n6 10Mb 1ms DropTail
 
@@ -38,9 +38,9 @@ $ns duplex-link-op $n2 $n3 orient right
 $ns duplex-link-op $n3 $n4 orient right-up 
 $ns duplex-link-op $n3 $n6 orient right-down
 
-#Create a UDP agent and attach it to node n0
+#Create a UDP agent and attach it to node n5
 set udp0 [new Agent/UDP]
-$ns attach-agent $n2 $udp0
+$ns attach-agent $n5 $udp0
 
 #Create a TCP agent and attach it to node n1
 set tcp1 [new Agent/TCP/Reno]
@@ -52,38 +52,27 @@ $ns connect $tcp1 $sink1
 set ftp1 [new Application/FTP]
 $ftp1 attach-agent $tcp1
 $ns at 0.5 "$ftp1 start"
-$ns at 10.5 "$ftp1 stop"
+$ns at 12.5 "$ftp1 stop"
 
-#Create a TCP agent and attach it to node n5
-set tcp2 [new Agent/TCP/Reno]
-$tcp2 set fid_ 2
-set sink2 [new Agent/TCPSink]
-$ns attach-agent $n5 $tcp2
-$ns attach-agent $n6 $sink2
-$ns connect $tcp2 $sink2
-set ftp2 [new Application/FTP]
-$ftp2 attach-agent $tcp2
-$ns at 0.5 "$ftp2 start"
-$ns at 10.5 "$ftp2 stop"
 
 # Create a CBR traffic source and attach it to udp0
 set cbr0 [new Application/Traffic/CBR]
-$cbr0 set packetSize_ 1500
-$cbr0 set interval_ 0.001
+$cbr0 set packetSize_ 500
+$cbr0 set interval_ 0.004
 $cbr0 attach-agent $udp0
 
-#Create a Null agent (a traffic sink) and attach it to node n3
+#Create a Null agent (a traffic sink) and attach it to node n6
 set null0 [new Agent/Null]
-$ns attach-agent $n3 $null0
+$ns attach-agent $n6 $null0
 
 #Connect the traffic source with the traffic sink
 $ns connect $udp0 $null0 
 
 #Schedule events for the CBR agent
-$ns at 0.5 "$cbr0 start"
-$ns at 10.5 "$cbr0 stop"
+$ns at 2.5 "$cbr0 start"
+$ns at 12.5 "$cbr0 stop"
 #Call the finish procedure after 5 seconds of simulation time
-$ns at 11.0 "finish"
+$ns at 13.0 "finish"
 
 #Run the simulation
 $ns run
