@@ -20,10 +20,7 @@ def parseBandwidth(filename,time=10):
       bws[flow] += size
     if source == 1 and dest == 2 and flow == 0 and event == "-":
       bws[flow] += size
-  for elem in bws:
-    elem = elem * 8.0
-    elem = elem / 1000000
-  return [bws[0]/time,bws[1]/time,bws[2]/time]
+  return [(bws[0] * 8.0)/(time * 1000000),(bws[1] * 8.0)/(time * 1000000),(bws[2] * 8.0)/(time * 1000000)]
   return bws
 
 def parsePacketLoss(filename):
