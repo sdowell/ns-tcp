@@ -62,13 +62,7 @@ def parsePacketLoss(filename):
 
 
 def main():
-  #code
-  
-  plt.plot([1,2,3,4])
-  plt.ylabel('some numbers')
-  plt.savefig('foo.png')
-  return
-  
+  #code 
   numflows = 3
   files = ["2.out", "4.out", "6.out", "8.out", "10.out"]
   cbr = [2,4,6,8,10]
@@ -95,6 +89,7 @@ def main():
   plt.legend(['CBR', 'Reno', 'Reno'], loc='upper left')
   for i in range(0,numflows):
     plt.plot(cbr,bw[i])
+  plt.show()
   plt.savefig('RxR.png')
   print parsePacketLoss("out.nam")
   print parseBandwidth("out.nam")
