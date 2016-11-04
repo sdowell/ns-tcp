@@ -89,7 +89,7 @@ def main():
   plt.legend(['CBR', 'Reno', 'Reno'], loc='upper left')
   for i in range(0,numflows):
     plt.plot(cbr,bw[i])
-  plt.show()
+  #plt.show()
   plt.savefig('RxR.png')
   print parsePacketLoss("out.nam")
   print parseBandwidth("out.nam")
