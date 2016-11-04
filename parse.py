@@ -91,9 +91,7 @@ def main():
     plt.plot(cbr,bw[i])
   #plt.show()
   plt.savefig('RxR.png')
-  print parsePacketLoss("out.nam")
-  print parseBandwidth("out.nam")
-  pass
+  return
 
 if __name__=="__main__":
   main()
