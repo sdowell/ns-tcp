@@ -1,8 +1,14 @@
+if {$argc != 1} {
+  puts "Expected argument CBR"
+  exit 1
+}
+set i [lindex $argv 0]
+puts "Inside loop: $i"
 #Create a simulator object
 set ns [new Simulator]
 
 #Open the nam trace file
-set nf [open out.nam w]
+set nf [open $i.out w]
 $ns namtrace-all $nf
 
 #Define a 'finish' procedure
@@ -12,7 +18,7 @@ proc finish {} {
 	#Close the trace file
         close $nf
 	#Execute nam on the trace file
-        exec nam out.nam &
+        #exec nam out.nam &
         exit 0
 }
 
@@ -66,10 +72,12 @@ $ftp2 attach-agent $tcp2
 $ns at 0.5 "$ftp2 start"
 $ns at 10.5 "$ftp2 stop"
 
+set size [expr {125 * $i}]
+puts "Size: $size"
 # Create a CBR traffic source and attach it to udp0
 set cbr0 [new Application/Traffic/CBR]
-$cbr0 set packetSize_ 5000
-$cbr0 set interval_ 0.005
+$cbr0 set packetSize_ $size
+$cbr0 set interval_ 0.001
 $cbr0 attach-agent $udp0
 
 #Create a Null agent (a traffic sink) and attach it to node n3
@@ -84,6 +92,6 @@ $ns at 0.5 "$cbr0 start"
 $ns at 10.5 "$cbr0 stop"
 #Call the finish procedure after 5 seconds of simulation time
 $ns at 11.0 "finish"
-
+puts "Running simulation $i"
 #Run the simulation
 $ns run

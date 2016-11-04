@@ -12,7 +12,7 @@ proc finish {} {
 	#Close the trace file
         close $nf
 	#Execute nam on the trace file
-        exec nam out.nam &
+        #exec nam out.nam &
         exit 0
 }
 
@@ -52,7 +52,7 @@ $ns connect $tcp1 $sink1
 set ftp1 [new Application/FTP]
 $ftp1 attach-agent $tcp1
 $ns at 0.5 "$ftp1 start"
-$ns at 12.5 "$ftp1 stop"
+$ns at 5.5 "$ftp1 stop"
 
 
 # Create a CBR traffic source and attach it to udp0
@@ -69,10 +69,10 @@ $ns attach-agent $n6 $null0
 $ns connect $udp0 $null0 
 
 #Schedule events for the CBR agent
-$ns at 2.5 "$cbr0 start"
-$ns at 12.5 "$cbr0 stop"
+$ns at 1.5 "$cbr0 start"
+$ns at 5.5 "$cbr0 stop"
 #Call the finish procedure after 5 seconds of simulation time
-$ns at 13.0 "finish"
+$ns at 6.0 "finish"
 
 #Run the simulation
 $ns run
