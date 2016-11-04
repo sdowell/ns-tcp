@@ -1,3 +1,9 @@
+if {$argc != 1} {
+  puts "Expected argument CBR"
+  exit 1
+}
+set i [lindex $argv 0]
+set size [expr {125 * $i}]
 #Create a simulator object
 set ns [new Simulator]
 
@@ -68,7 +74,7 @@ $ns at 10.5 "$ftp2 stop"
 
 # Create a CBR traffic source and attach it to udp0
 set cbr0 [new Application/Traffic/CBR]
-$cbr0 set packetSize_ 1500
+$cbr0 set packetSize_ $size
 $cbr0 set interval_ 0.001
 $cbr0 attach-agent $udp0
 
