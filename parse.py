@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 
 def parseBandwidth(filename,time=10):
   bws = [0.0,0.0,0.0]
@@ -62,6 +63,33 @@ def parsePacketLoss(filename):
 
 def main():
   #code
+  numflows = 3
+  files = ["2.out", "4.out", "6.out", "8.out", "10.out"]
+  cbr = [2,4,6,8,10]
+  loss = []
+  bw = []
+  for i in range(0, numflows):
+    loss.append([])
+    bw.append([])
+  for file in files:
+    l = parsePacketLoss(file)
+    for i in range(0, len(l)):
+      loss[i].append(l[i])
+    b = parseBandwidth(file)
+    for i in range(0, len(b)):
+      bw[i].append(b[i])
+  plt.subplot(2,1,1)
+  plt.title('Reno/Reno')
+  plt.ylabel('Loss Percentage')
+  plt.legend(['CBR', 'Reno', 'Reno'], loc='upper left')
+  for i in range(0,numflows):
+    plt.plot(cbr,loss[i])
+  plt.subplot(2,1,2)
+  plt.ylabel('Bandwidth')
+  plt.legend(['CBR', 'Reno', 'Reno'], loc='upper left')
+  for i in range(0,numflows):
+    plt.plot(cbr,bw[i])
+  plt.savefig('RxR.png')
   print parsePacketLoss("out.nam")
   print parseBandwidth("out.nam")
   pass
