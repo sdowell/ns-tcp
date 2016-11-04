@@ -12,7 +12,7 @@ proc finish {} {
 	#Close the trace file
         close $nf
 	#Execute nam on the trace file
-        exec nam out.nam &
+        #exec nam out.nam &
         exit 0
 }
 
@@ -68,7 +68,7 @@ $ns at 10.5 "$ftp2 stop"
 
 # Create a CBR traffic source and attach it to udp0
 set cbr0 [new Application/Traffic/CBR]
-$cbr0 set packetSize_ 250
+$cbr0 set packetSize_ 1250
 $cbr0 set interval_ 0.001
 $cbr0 attach-agent $udp0
 
