@@ -70,6 +70,7 @@ $ns at 5.5 "$cbr0 stop"
 
 #Create a UDP agent and attach it to node n5
 set udp1 [new Agent/UDP]
+$udp1 set fid_ 1
 $ns attach-agent $n5 $udp1
 # Create a CBR traffic source and attach it to udp0
 set cbr1 [new Application/Traffic/CBR]
@@ -87,6 +88,7 @@ $ns at 5.6 "$cbr1 stop"
 
 #Create a UDP agent and attach it to node n7
 set udp2 [new Agent/UDP]
+$udp2 set fid_ 2
 $ns attach-agent $n7 $udp2
 # Create a CBR traffic source and attach it to udp0
 set cbr2 [new Application/Traffic/CBR]

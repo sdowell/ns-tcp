@@ -70,6 +70,18 @@ def parsePacketLoss(filename, numflows=3):
   return [100.0 * tuples[0][1]/tuples[0][0],100.0 * tuples[1][1]/tuples[1][0],100.0 * tuples[2][1]/tuples[2][0]]
   return tuples
 
+def parseLatency(filename, numflows=3):
+  latency = []
+  for flow in range(0, numflows):
+    latency.append({})
+  with open(filename) as f:
+    lines = f.readlines()
+  for line in lines:
+    words = line.split()
+    if words[2] == "*":
+      continue
+    event = words[0]
+
 
 def main():
   #code 
@@ -96,6 +108,7 @@ def main():
   N = 2
   width = .35
   ind = np.arange(N)
+  ind = ind * 1.5
   fig, ax = plt.subplots()
   rects1 = ax.bar(ind, bw[0], width, color='r')
   rects2 = ax.bar(ind + width, bw[1], width, color='y')
