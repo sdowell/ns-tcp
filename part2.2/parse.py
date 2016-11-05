@@ -56,7 +56,7 @@ def parsePacketLoss(filename, numflows=3):
       tuples[flow][0] += 1
     if source == 4 and flow == 2 and event == "-":
       tuples[flow][0] += 1
-    if source == 1 and flow == 0 and event == "-":
+    if source == 6 and flow == 0 and event == "-":
       tuples[flow][0] += 1
     if event == "d":
       tuples[flow][1] += 1
@@ -73,23 +73,23 @@ def parsePacketLoss(filename, numflows=3):
 
 def main():
   #code 
-  numflows = 2
-  files = ["Reno.DropTail.out", "Reno.RED.out", "Sack1.DropTail.out", "Sack1.RED.out"]
+  nflows = 3
+  files = ["DropTail.out", "RED.out"]
   labels = []
   for file in files:
     spl = file.split('.')
-    labels.append(spl[0] + "/" + spl[1])
+    labels.append(spl[0])
   cbr = [2,4,6,8,10]
   loss = []
   bw = []
-  for i in range(0, numflows):
+  for i in range(0, nflows):
     loss.append([])
     bw.append([])
   for file in files:
-    l = parsePacketLoss(file, numflows=2)
+    l = parsePacketLoss(file, numflows=nflows)
     for i in range(0, len(l)):
       loss[i].append(l[i])
-    b = parseBandwidth(file, numflows=2)
+    b = parseBandwidth(file, numflows=nflows)
     for i in range(0, len(b)):
       bw[i].append(b[i])
 
@@ -98,13 +98,13 @@ def main():
   ind = np.arange(N)
   fig, ax = plt.subplots()
   rects1 = ax.bar(ind, bw[0], width, color='r')
-
   rects2 = ax.bar(ind + width, bw[1], width, color='y')
+  rects3 = ax.bar(ind + 2 * width, bw[2], width, color='g')
   ax.set_ylabel('Bandwidth (Mb)')
   ax.set_title('Influence of Queueing')
-  ax.set_xticks(ind + width)
+  ax.set_xticks(ind + width * 1.5)
   ax.set_xticklabels(labels)
-  ax.legend((rects1[0], rects2[0]), ('CBR', 'TCP'))
+  ax.legend((rects1[0], rects2[0], rects3[0]), ('1 KB @ 1 Mbps', '1 KB @ 1 Mbps', '.5 KB @ .6 Mbps'))
   plt.show()
   fig, ax = plt.subplots()
   rects1 = ax.bar(ind, loss[0], width, color='r')
