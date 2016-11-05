@@ -91,11 +91,13 @@ def main(args):
   plt.subplot(2,1,1)
   plt.title(proto1)
   plt.ylabel('Loss Percentage (%)')
+  plt.xlabel('CBR Flow Bitrate (Mbps)')
   for i in range(0,numflows):
     plt.plot(cbr,loss[i])
   plt.legend(['CBR', proto1], loc='upper left')
   plt.subplot(2,1,2)
-  plt.ylabel('Bandwidth (Mb)')
+  plt.ylabel('Bandwidth (Mbps)')
+  plt.xlabel('CBR Flow Bitrate (Mbps)')
   for i in range(0,numflows):
     plt.plot(cbr,bw[i])
   plt.legend(['CBR', proto1], loc='upper left')
