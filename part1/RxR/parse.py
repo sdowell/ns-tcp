@@ -64,8 +64,8 @@ def parsePacketLoss(filename, numflows=3):
 def main():
   #code 
   numflows = 3
-  files = ["2.out", "4.out", "6.out", "8.out", "10.out"]
-  cbr = [2,4,6,8,10]
+  files = ["0.out","1.out","2.out", "3.out", "4.out", "5.out", "6.out", "7.out", "8.out", "9.out", "10.out"]
+  cbr = [0,1,2,3,4,5,6,7,8,9,10]
   loss = []
   bw = []
   for i in range(0, numflows):
@@ -89,8 +89,8 @@ def main():
   for i in range(0,numflows):
     plt.plot(cbr,bw[i])
   plt.legend(['CBR', 'Reno', 'Reno'], loc='upper left')
-  #plt.show()
-  plt.savefig('RxR.png')
+  plt.show()
+  #plt.savefig('RxR.png')
   return
 
 if __name__=="__main__":

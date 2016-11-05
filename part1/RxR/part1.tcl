@@ -8,7 +8,7 @@ set size [expr {125 * $i}]
 set ns [new Simulator]
 
 #Open the nam trace file
-set nf [open out.nam w]
+set nf [open $i.out w]
 $ns namtrace-all $nf
 
 #Define a 'finish' procedure
@@ -86,8 +86,8 @@ $ns attach-agent $n3 $null0
 $ns connect $udp0 $null0 
 
 #Schedule events for the CBR agent
-$ns at 0.5 "$cbr0 start"
-$ns at 10.5 "$cbr0 stop"
+#$ns at 0.5 "$cbr0 start"
+#$ns at 10.5 "$cbr0 stop"
 #Call the finish procedure after 5 seconds of simulation time
 $ns at 11.0 "finish"
 

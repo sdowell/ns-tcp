@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 def parseBandwidth(filename,time=10, numflows=3):
   bws = [0.0,0.0,0.0]
@@ -35,7 +36,10 @@ def parseBandwidth(filename,time=10, numflows=3):
   #return bws
 
 def parsePacketLoss(filename, numflows=3):
-  tuples = [[0.0,0.0],[0.0,0.0],[0.0,0.0]]
+  #tuples = [[0.0,0.0],[0.0,0.0],[0.0,0.0]]
+  tuples = []
+  for i in range(0, numflows):
+    tuples.append([0.0,0.0])
   with open(filename) as f:
     lines = f.readlines()
   for line in lines:
@@ -56,15 +60,25 @@ def parsePacketLoss(filename, numflows=3):
       tuples[flow][0] += 1
     if event == "d":
       tuples[flow][1] += 1
-      
+  retval = []
+  for i in range(0, numflows):
+    if tuples[i][0] == 0:
+      retval.append(0.0)
+    else:
+      retval.append(100.0 * tuples[i][1] / tuples[i][0])
+  return retval    
   return [100.0 * tuples[0][1]/tuples[0][0],100.0 * tuples[1][1]/tuples[1][0],100.0 * tuples[2][1]/tuples[2][0]]
   return tuples
 
 
 def main():
   #code 
-  numflows = 3
-  files = ["2.out", "4.out", "6.out", "8.out", "10.out"]
+  numflows = 2
+  files = ["Reno.DropTail.out", "Reno.RED.out", "Sack1.DropTail.out", "Sack1.RED.out"]
+  labels = []
+  for file in files:
+    spl = file.split('.')
+    labels.append(spl[0] + "/" + spl[1])
   cbr = [2,4,6,8,10]
   loss = []
   bw = []
@@ -72,12 +86,37 @@ def main():
     loss.append([])
     bw.append([])
   for file in files:
-    l = parsePacketLoss(file)
+    l = parsePacketLoss(file, numflows=2)
     for i in range(0, len(l)):
       loss[i].append(l[i])
-    b = parseBandwidth(file)
+    b = parseBandwidth(file, numflows=2)
     for i in range(0, len(b)):
       bw[i].append(b[i])
+
+  N = 4
+  width = .35
+  ind = np.arange(N)
+  fig, ax = plt.subplots()
+  rects1 = ax.bar(ind, bw[0], width, color='r')
+
+  rects2 = ax.bar(ind + width, bw[1], width, color='y')
+  ax.set_ylabel('Bandwidth (Mb)')
+  ax.set_title('Influence of Queueing')
+  ax.set_xticks(ind + width)
+  ax.set_xticklabels(labels)
+  ax.legend((rects1[0], rects2[0]), ('CBR', 'TCP'))
+  plt.show()
+  fig, ax = plt.subplots()
+  rects1 = ax.bar(ind, loss[0], width, color='r')
+  rects2 = ax.bar(ind + width, loss[1], width, color='y')
+  ax.set_ylabel('Loss Percentage (%)')
+  ax.set_xticks(ind + width)
+  ax.set_xticklabels(labels)
+  ax.legend((rects1[0], rects2[0]), ('CBR', 'TCP'))
+  plt.show()
+  return
+  
+
   plt.subplot(2,1,1)
   plt.title('NewReno/Reno')
   plt.ylabel('Loss Percentage (%)')
