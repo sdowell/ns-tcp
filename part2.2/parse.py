@@ -52,11 +52,11 @@ def parsePacketLoss(filename, numflows=3):
     protocol = words[8]
     size = int(words[10])
     flow = int(words[12])
-    if source == 0 and flow == 1 and event == "-":
+    if source == 0 and flow == 0 and event == "-":
       tuples[flow][0] += 1
-    if source == 4 and flow == 2 and event == "-":
+    if source == 4 and flow == 1 and event == "-":
       tuples[flow][0] += 1
-    if source == 6 and flow == 0 and event == "-":
+    if source == 6 and flow == 2 and event == "-":
       tuples[flow][0] += 1
     if event == "d":
       tuples[flow][1] += 1
@@ -72,8 +72,10 @@ def parsePacketLoss(filename, numflows=3):
 
 def parseLatency(filename, numflows=3):
   latency = []
+  sendtime = []
   for flow in range(0, numflows):
-    latency.append({})
+    sendtime.append({})
+    latency.append([])
   with open(filename) as f:
     lines = f.readlines()
   for line in lines:
@@ -81,8 +83,29 @@ def parseLatency(filename, numflows=3):
     if words[2] == "*":
       continue
     event = words[0]
-
-
+    time = float(words[2])
+    source = int(words[4])
+    dest = int(words[6])
+    protocol = words[8]
+    size = int(words[10])
+    flow = int(words[12])
+    index = int(words[14])
+    if source == 0 and flow == 0 and event == "-":
+      sendtime[flow][index] = time
+    if source == 4 and flow == 1 and event == "-":
+      sendtime[flow][index] = time
+    if source == 6 and flow == 2 and event == "-":
+      sendtime[flow][index] = time
+    if dest == 3 and event == "r":
+      latency[flow].append(time - sendtime[flow][index])
+    if dest == 5 and event == "r":
+      latency[flow].append(time - sendtime[flow][index])
+    if dest == 7 and event == "r":
+      latency[flow].append(time - sendtime[flow][index])
+  retvals = []
+  for i in range(0, numflows):
+    retvals.append(np.mean(latency[i]))
+  return retvals
 def main():
   #code 
   nflows = 3
@@ -104,7 +127,7 @@ def main():
     b = parseBandwidth(file, numflows=nflows)
     for i in range(0, len(b)):
       bw[i].append(b[i])
-
+  print parseLatency(file, numflows=nflows)
   N = 2
   width = .35
   ind = np.arange(N)
