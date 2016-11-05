@@ -10,10 +10,11 @@ def parseBandwidth(filename,time=4, numflows=3):
     lines = f.readlines()
   for line in lines:
     words = line.split()
-    time = words[2]
-    if time == "*":
+    if words[2] == "*":
       continue
-    if float(time) < 1.5:
+    if float(words[2]) < 1.5:
+      continue
+    if float(words[2]) > 5.5:
       continue
     event = words[0]
     source = int(words[4])
@@ -51,6 +52,8 @@ def parsePacketLoss(filename, numflows=3):
     if time == "*":
       continue
     if float(time) < 1.5:
+      continue
+    if float(time) > 5.5:
       continue
     event = words[0]
     source = int(words[4])
@@ -98,7 +101,8 @@ def main():
     b = parseBandwidth(file, numflows=2)
     for i in range(0, len(b)):
       bw[i].append(b[i])
-
+  print bw
+  print loss
   N = 4
   width = .35
   ind = np.arange(N)

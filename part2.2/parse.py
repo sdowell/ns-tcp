@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def parseBandwidth(filename,time=10, numflows=3):
+def parseBandwidth(filename,time=5, numflows=3):
   bws = [0.0,0.0,0.0]
   bws = []
   for i in range(0, numflows):
@@ -11,6 +11,8 @@ def parseBandwidth(filename,time=10, numflows=3):
   for line in lines:
     words = line.split()
     if words[2] == "*":
+      continue
+    if float(words[2]) > 5.5:
       continue
     event = words[0]
     source = int(words[4])
@@ -82,6 +84,8 @@ def parseLatency(filename, numflows=3):
     words = line.split()
     if words[2] == "*":
       continue
+    if float(words[2]) > 5.5:
+      continue
     event = words[0]
     time = float(words[2])
     source = int(words[4])
@@ -133,6 +137,7 @@ def main():
     for i in range(0, len(lat)):
       latency[i].append(lat[i])
   print latency
+  print bw
   N = 2
   width = .35
   ind = np.arange(N)
