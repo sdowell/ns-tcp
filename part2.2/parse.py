@@ -104,7 +104,7 @@ def parseLatency(filename, numflows=3):
       latency[flow].append(time - sendtime[flow][index])
   retvals = []
   for i in range(0, numflows):
-    retvals.append(np.mean(latency[i]))
+    retvals.append(np.mean(latency[i]) * 1000)
   return retvals
 def main():
   #code 
@@ -117,9 +117,11 @@ def main():
   cbr = [2,4,6,8,10]
   loss = []
   bw = []
+  latency = []
   for i in range(0, nflows):
     loss.append([])
     bw.append([])
+    latency.append([])
   for file in files:
     l = parsePacketLoss(file, numflows=nflows)
     for i in range(0, len(l)):
@@ -127,7 +129,9 @@ def main():
     b = parseBandwidth(file, numflows=nflows)
     for i in range(0, len(b)):
       bw[i].append(b[i])
-  print parseLatency(file, numflows=nflows)
+    lat = parseLatency(file, numflows=nflows)
+    for i in range(0, len(lat)):
+      latency.append(lat[i])
   N = 2
   width = .35
   ind = np.arange(N)
@@ -142,6 +146,18 @@ def main():
   ax.set_xticklabels(labels)
   ax.legend((rects1[0], rects2[0], rects3[0]), ('1 KB @ 1 Mbps', '1 KB @ 1 Mbps', '.5 KB @ .6 Mbps'))
   plt.show()
+  
+  fig, ax = plt.subplots()
+  rects1 = ax.bar(ind, latency[0], width, color='r')
+  rects2 = ax.bar(ind + width, latency[1], width, color='y')
+  rects3 = ax.bar(ind + 2 * width, latency[2], width, color='g')
+  ax.set_ylabel('Latency (ms)')
+  ax.set_title('Influence of Queueing')
+  ax.set_xticks(ind + width * 1.5)
+  ax.set_xticklabels(labels)
+  ax.legend((rects1[0], rects2[0], rects3[0]), ('1 KB @ 1 Mbps', '1 KB @ 1 Mbps', '.5 KB @ .6 Mbps'))
+  plt.show()
+  return
   fig, ax = plt.subplots()
   rects1 = ax.bar(ind, loss[0], width, color='r')
   rects2 = ax.bar(ind + width, loss[1], width, color='y')
