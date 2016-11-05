@@ -131,7 +131,8 @@ def main():
       bw[i].append(b[i])
     lat = parseLatency(file, numflows=nflows)
     for i in range(0, len(lat)):
-      latency.append(lat[i])
+      latency[i].append(lat[i])
+  print latency
   N = 2
   width = .35
   ind = np.arange(N)
@@ -140,23 +141,24 @@ def main():
   rects1 = ax.bar(ind, bw[0], width, color='r')
   rects2 = ax.bar(ind + width, bw[1], width, color='y')
   rects3 = ax.bar(ind + 2 * width, bw[2], width, color='g')
-  ax.set_ylabel('Bandwidth (Mb)')
-  ax.set_title('Influence of Queueing')
+  ax.set_ylabel('Throughput (Mb)')
+  ax.set_title('CBR Throughput for DropTail/RED')
   ax.set_xticks(ind + width * 1.5)
   ax.set_xticklabels(labels)
   ax.legend((rects1[0], rects2[0], rects3[0]), ('1 KB @ 1 Mbps', '1 KB @ 1 Mbps', '.5 KB @ .6 Mbps'))
-  plt.show()
-  
+  #plt.show()
+  plt.savefig("Throughput22.png")
   fig, ax = plt.subplots()
   rects1 = ax.bar(ind, latency[0], width, color='r')
   rects2 = ax.bar(ind + width, latency[1], width, color='y')
   rects3 = ax.bar(ind + 2 * width, latency[2], width, color='g')
   ax.set_ylabel('Latency (ms)')
-  ax.set_title('Influence of Queueing')
+  ax.set_title('CBR Latency for DropTail/RED')
   ax.set_xticks(ind + width * 1.5)
   ax.set_xticklabels(labels)
   ax.legend((rects1[0], rects2[0], rects3[0]), ('1 KB @ 1 Mbps', '1 KB @ 1 Mbps', '.5 KB @ .6 Mbps'))
-  plt.show()
+  #plt.show()
+  plt.savefig("Latency22.png")
   return
   fig, ax = plt.subplots()
   rects1 = ax.bar(ind, loss[0], width, color='r')
