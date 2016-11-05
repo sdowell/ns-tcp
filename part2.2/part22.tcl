@@ -9,17 +9,17 @@ puts "Queue: $queue"
 set ns [new Simulator]
 
 #Open the nam trace file
-set nf [open $tcp.$queue.out w]
+set nf [open $queue.out w]
 $ns namtrace-all $nf
 
 #Define a 'finish' procedure
 proc finish {} {
-        global ns nf
+        global ns nf queue
         $ns flush-trace
 	#Close the trace file
         close $nf
 	#Execute nam on the trace file
-        #exec nam out.nam &
+        exec nam $queue.out &
         exit 0
 }
 
