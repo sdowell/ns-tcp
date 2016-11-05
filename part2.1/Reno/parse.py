@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def parseBandwidth(filename,time=10, numflows=3):
+def parseBandwidth(filename,time=4, numflows=3):
   bws = [0.0,0.0,0.0]
   bws = []
   for i in range(0, numflows):
@@ -10,7 +10,10 @@ def parseBandwidth(filename,time=10, numflows=3):
     lines = f.readlines()
   for line in lines:
     words = line.split()
-    if words[2] == "*":
+    time = words[2]
+    if time == "*":
+      continue
+    if float(time) < 1.5:
       continue
     event = words[0]
     source = int(words[4])
@@ -44,7 +47,10 @@ def parsePacketLoss(filename, numflows=3):
     lines = f.readlines()
   for line in lines:
     words = line.split()
-    if words[2] == "*":
+    time = words[2]
+    if time == "*":
+      continue
+    if float(time) < 1.5:
       continue
     event = words[0]
     source = int(words[4])
