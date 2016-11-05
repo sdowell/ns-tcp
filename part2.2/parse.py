@@ -93,7 +93,7 @@ def main():
     for i in range(0, len(b)):
       bw[i].append(b[i])
 
-  N = 4
+  N = 2
   width = .35
   ind = np.arange(N)
   fig, ax = plt.subplots()
