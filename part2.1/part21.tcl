@@ -16,12 +16,12 @@ $ns namtrace-all $nf
 
 #Define a 'finish' procedure
 proc finish {} {
-        global ns nf
+        global ns nf tcp queue
         $ns flush-trace
 	#Close the trace file
         close $nf
 	#Execute nam on the trace file
-        #exec nam out.nam &
+        exec nam $tcp.$queue.out &
         exit 0
 }
 

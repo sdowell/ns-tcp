@@ -36,6 +36,9 @@ def parseBandwidth(filename,time=10, numflows=3):
 
 def parsePacketLoss(filename, numflows=3):
   tuples = [[0.0,0.0],[0.0,0.0],[0.0,0.0]]
+  tuples = []
+  for i in range(0, numflows):
+    tuples.append([0.0,0.0])
   with open(filename) as f:
     lines = f.readlines()
   for line in lines:
@@ -56,7 +59,13 @@ def parsePacketLoss(filename, numflows=3):
       tuples[flow][0] += 1
     if event == "d":
       tuples[flow][1] += 1
-      
+  retval = []
+  for i in range(0, numflows):
+    if tuples[i][0] == 0:
+      retval.append(0.0)
+    else:
+      retval.append(100.0 * tuples[i][1] / tuples[i][0])
+  return retval
   return [100.0 * tuples[0][1]/tuples[0][0],100.0 * tuples[1][1]/tuples[1][0],100.0 * tuples[2][1]/tuples[2][0]]
   return tuples
 
@@ -89,8 +98,8 @@ def main():
   for i in range(0,numflows):
     plt.plot(cbr,bw[i])
   plt.legend(['CBR', 'Reno', 'Reno'], loc='upper left')
-  plt.show()
-  #plt.savefig('RxR.png')
+  #plt.show()
+  plt.savefig('RxR.png')
   return
 
 if __name__=="__main__":

@@ -90,8 +90,8 @@ def main():
   for i in range(0,numflows):
     plt.plot(cbr,bw[i])
   plt.legend(['CBR', 'NewReno', 'Reno'], loc='upper left')
-  #plt.show()
-  plt.savefig('NRxR.png')
+  plt.show()
+  #plt.savefig('NRxR.png')
   return
 
 if __name__=="__main__":

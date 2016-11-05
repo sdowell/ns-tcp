@@ -1,8 +1,10 @@
-if {$argc != 1} {
-  puts "Expected argument CBR"
+if {$argc != 3} {
+  puts "Expected argument: CBR TCP1 TCP2"
   exit 1
 }
 set i [lindex $argv 0]
+set proto1 [lindex $argv 1]
+set proto2 [lindex $argv 2]
 puts "Inside loop: $i"
 #Create a simulator object
 set ns [new Simulator]
@@ -49,7 +51,7 @@ set udp0 [new Agent/UDP]
 $ns attach-agent $n2 $udp0
 
 #Create a TCP agent and attach it to node n1
-set tcp1 [new Agent/TCP/Reno]
+set tcp1 [new Agent/TCP/$proto1]
 $tcp1 set fid_ 1
 set sink1 [new Agent/TCPSink]
 $ns attach-agent $n1 $tcp1
@@ -61,7 +63,7 @@ $ns at 0.5 "$ftp1 start"
 $ns at 10.5 "$ftp1 stop"
 
 #Create a TCP agent and attach it to node n5
-set tcp2 [new Agent/TCP/Reno]
+set tcp2 [new Agent/TCP/$proto2]
 $tcp2 set fid_ 2
 set sink2 [new Agent/TCPSink]
 $ns attach-agent $n5 $tcp2

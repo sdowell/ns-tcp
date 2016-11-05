@@ -101,19 +101,22 @@ def main():
 
   rects2 = ax.bar(ind + width, bw[1], width, color='y')
   ax.set_ylabel('Bandwidth (Mb)')
-  ax.set_title('Influence of Queueing')
+  ax.set_title('Bandwidth for TCP/CBR on a Shared Link')
   ax.set_xticks(ind + width)
   ax.set_xticklabels(labels)
   ax.legend((rects1[0], rects2[0]), ('CBR', 'TCP'))
-  plt.show()
+  #plt.show()
+  plt.savefig("Bandwidth.png")
   fig, ax = plt.subplots()
   rects1 = ax.bar(ind, loss[0], width, color='r')
   rects2 = ax.bar(ind + width, loss[1], width, color='y')
   ax.set_ylabel('Loss Percentage (%)')
+  ax.set_title('Loss for TCP/CBR on a Shared Link')
   ax.set_xticks(ind + width)
   ax.set_xticklabels(labels)
   ax.legend((rects1[0], rects2[0]), ('CBR', 'TCP'))
-  plt.show()
+  #plt.show()
+  plt.savefig("Loss.png")
   return
   
 
