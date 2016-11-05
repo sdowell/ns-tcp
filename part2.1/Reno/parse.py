@@ -54,10 +54,10 @@ def parsePacketLoss(filename, numflows=3):
     flow = int(words[12])
     if source == 0 and flow == 1 and event == "-":
       tuples[flow][0] += 1
-    if source == 4 and flow == 2 and event == "-":
+    if source == 4 and flow == 0 and event == "-":
       tuples[flow][0] += 1
-    if source == 1 and flow == 0 and event == "-":
-      tuples[flow][0] += 1
+#    if source == 1 and flow == 0 and event == "-":
+#      tuples[flow][0] += 1
     if event == "d":
       tuples[flow][1] += 1
   retval = []
